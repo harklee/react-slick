@@ -66,7 +66,7 @@
     "json2mq": "^0.2.0",
     "object-assign": "^4.1.0",
     "react-responsive-mixin": "^0.4.0",
-    "slick-carousel": "^1.6.0"
+    "slick-carousel": "https://github.com/harklee/slick/tarball/3a3b29af604cd5a21ebad652f4afc0cd1bf90c1b" 
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.1",
