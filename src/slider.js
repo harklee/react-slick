@@ -59,6 +59,7 @@ var Slider = React.createClass({
   render: function () {
     var settings;
     var newProps;
+
     if (this.state.breakpoint) {
       newProps = this.props.responsive.filter(resp => resp.breakpoint === this.state.breakpoint);
       settings = newProps[0].settings === 'unslick' ? 'unslick' : assign({}, this.props, newProps[0].settings);

@@ -129,6 +129,13 @@ export var InnerSlider = React.createClass({
       'slick-vertical': this.props.vertical,
     });
 
+    // Project Dots : overflow styles
+    if(this.props.overFlow){
+      var overflowStyle = {overflow: "visible"};
+    } else{
+      var overflowStyle = {overflow: "hidden"};
+    }
+
     var trackProps = {
       fade: this.props.fade,
       cssEase: this.props.cssEase,
@@ -145,7 +152,14 @@ export var InnerSlider = React.createClass({
       slidesToScroll: this.props.slidesToScroll,
       slideCount: this.state.slideCount,
       trackStyle: this.state.trackStyle,
-      variableWidth: this.props.variableWidth
+      variableWidth: this.props.variableWidth,
+
+      // Project Dots : customized variables
+      hoverZoom: this.props.hoverZoom,
+      hoverZoomScale: this.props.hoverZoomScale,
+      overFlow: this.props.overFlow,
+      gallery: this.props.gallery,
+      galleryClass: this.props.galleryClass,
     };
 
     var dots;
@@ -207,7 +221,8 @@ export var InnerSlider = React.createClass({
       }
     }
 
-    const listStyle = assign({}, verticalHeightStyle, centerPaddingStyle);
+    // Project Dots : add overflow properties to the list style
+    const listStyle = assign({}, verticalHeightStyle, centerPaddingStyle, overflowStyle);
 
     return (
       <div
@@ -229,7 +244,8 @@ export var InnerSlider = React.createClass({
           onTouchMove={this.state.dragging ? this.swipeMove: null}
           onTouchEnd={this.swipeEnd}
           onTouchCancel={this.state.dragging ? this.swipeEnd: null}
-          onKeyDown={this.props.accessibility ? this.keyHandler : null}>
+          onKeyDown={this.props.accessibility ? this.keyHandler : null}
+        >
           <Track ref={this.trackRefHandler} {...trackProps}>
             {this.props.children}
           </Track>
