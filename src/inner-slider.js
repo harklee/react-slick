@@ -158,8 +158,8 @@ export var InnerSlider = React.createClass({
       hoverZoom: this.props.hoverZoom,
       hoverZoomScale: this.props.hoverZoomScale,
       overFlow: this.props.overFlow,
-      gallery: this.props.gallery,
-      galleryClass: this.props.galleryClass,
+      galleryMode: this.props.galleryMode,
+      galleryClickHandler: this.props.galleryClickHandler
     };
 
     var dots;

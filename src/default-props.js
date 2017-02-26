@@ -51,8 +51,8 @@ var defaultProps = {
     hoverZoom: false,
     hoverZoomScale: 1.55,
     overFlow: false,
-    gallery: false,
-    galleryClass: null
+    galleryMode: false,
+    galleryClickHandler: null,
 };
 
 module.exports = defaultProps;

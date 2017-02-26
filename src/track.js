@@ -101,7 +101,6 @@ var RenderSlides = React.createClass({
 
   // mouse click event
   onClick(key,e) {
-    //console.log("onClick");
     /* original code
     child.props && child.props.onClick && child.props.onClick(e)
     if (spec.focusOnSelect) {
@@ -112,8 +111,6 @@ var RenderSlides = React.createClass({
 
   // mouse over event
   onMouseOver(key,e) {
-    //console.log("onMouseOver");
-
     // if hover zoom is enabled
     if(this.props.spec.hoverZoom){
       // scale and shift amount
@@ -343,8 +340,6 @@ var RenderSlides = React.createClass({
 
   // mouse out event
   onMouseOut(key,e) {
-    //console.log("onMouseOut");
-
     // number of slides
     var count = this.props.spec.children.length;
 
@@ -445,17 +440,25 @@ var RenderSlides = React.createClass({
         msTransform: 'scale('+this.state.scale[index]+') translate('+this.state.shift[index]+'px,0px)'
       },transitionStyle);
 
-      // main slide objects
-      slides.push(React.cloneElement(child, {
+      // settings
+      var settings = {
         key: 'original' + getKey(child, index),
         'data-index': index,
         className: cssClasses,
         tabIndex: '-1',
         style: style,
-        onClick: this.onClick.bind(this,key),
         onMouseOver: this.onMouseOver.bind(this,key),
         onMouseOut: this.onMouseOut.bind(this,key)
-      }));
+      }
+
+      // main slide objects
+      if(this.props.spec.galleryMode){
+        // gallery click settings
+        var clickSettings = {onClick: this.props.spec.galleryClickHandler.bind(this,key)};
+        slides.push(React.cloneElement(child,assign(settings,clickSettings)));
+      } else{
+        slides.push(React.cloneElement(child,settings));
+      }
 
       // for infinite loop (variableWidth doesn't wrap properly)
       if (spec.infinite && spec.fade === false) {
@@ -473,16 +476,24 @@ var RenderSlides = React.createClass({
             msTransform: 'scale('+this.state.preScale[key + count]+') translate('+this.state.preShift[key + count]+'px,0px)'
           },transitionStyle);
 
-          // preclone slide objects
-          preCloneSlides.push(React.cloneElement(child, {
+          // settings
+          var settings = {
             key: 'precloned' + getKey(child, key),
             'data-index': key,
             className: cssClasses,
             style: style,
-            onClick: this.onClick.bind(this,key),
             onMouseOver: this.onMouseOver.bind(this,key),
             onMouseOut: this.onMouseOut.bind(this,key)
-          }));
+          }
+
+          // preclone slide objects
+          if(this.props.spec.galleryMode){
+            // gallery click settings
+            var clickSettings = {onClick: this.props.spec.galleryClickHandler.bind(this,key)};
+            preCloneSlides.push(React.cloneElement(child,assign(settings,clickSettings)));
+          } else{
+            preCloneSlides.push(React.cloneElement(child,settings));
+          }
         }
 
         // postclone slides
@@ -497,16 +508,24 @@ var RenderSlides = React.createClass({
             msTransform: 'scale('+this.state.postScale[key - count]+') translate('+this.state.postShift[key + count]+'px,0px)'
           },transitionStyle);
 
-          // postclone slide objects
-          postCloneSlides.push(React.cloneElement(child, {
+          // settings
+          var settings = {
             key: 'postcloned' + getKey(child, key),
             'data-index': key,
             className: cssClasses,
             style: style,
-            onClick: this.onClick.bind(this,key),
             onMouseOver: this.onMouseOver.bind(this,key),
             onMouseOut: this.onMouseOut.bind(this,key)
-          }));
+          }
+
+          // postclone slide objects
+          if(this.props.spec.galleryMode){
+            // gallery click settings
+            var clickSettings = {onClick: this.props.spec.galleryClickHandler.bind(this,key)};
+            postCloneSlides.push(React.cloneElement(child,assign(settings,clickSettings)));
+          } else{
+            postCloneSlides.push(React.cloneElement(child,settings));
+          }
         }
       }
     });
