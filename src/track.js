@@ -127,18 +127,25 @@ var RenderSlides = React.createClass({
       var newPostScale = [];
 
       // number of slides
-      var count = this.props.spec.slidesToShow;
+      var slideCount = React.Children.count(this.props.spec.children);
+      var viewCount = this.props.spec.slidesToShow;
+      
+      //console.log("onMouseOver");
+      //console.log("===============================");
+      //console.log("key = ",key);
+      //console.log("slideCount = ",slideCount);
+      //console.log("viewCount = ",viewCount);
 
       // if the slide in focus on the edge of the list
-      var leftEdge = (key==this.props.spec.currentSlide);
-      var rightEdge = (key==(this.props.spec.currentSlide+count-1));
+      var leftEdge = (key == this.props.spec.currentSlide);
+      var rightEdge = (key == (this.props.spec.currentSlide + viewCount - 1));
 
       // edge
-      if(leftEdge||rightEdge){
+      if(leftEdge || rightEdge){
         if(leftEdge){
           // add shift and scale parameters
-          if((key >= 0) && (key < count)){
-            for (var j = 0; j < count; j++){
+          if((key >= 0) && (key < slideCount)){
+            for (var j = 0; j < slideCount; j++){
               if(j < key){
                 newShift[j] = 0;
                 newScale[j] = 1.0;
@@ -158,16 +165,16 @@ var RenderSlides = React.createClass({
             }
           }
           if(key < 0){
-            for (var j = 0; j < count; j++){
-              if(j < (key + count)){
+            for (var j = 0; j < slideCount; j++){
+              if(j < (key + slideCount)){
                 newPreShift[j] = 0;
                 newPreScale[j] = 1.0;
               }
-              if(j == (key + count)){
+              if(j == (key + slideCount)){
                 newPreShift[j] = shiftLengthEdge;
                 newPreScale[j] = scaleUp;
               }
-              if(j > (key + count)){
+              if(j > (key + slideCount)){
                 newPreShift[j] = shiftLength*2;
                 newPreScale[j] = 1.0;
               }
@@ -177,17 +184,17 @@ var RenderSlides = React.createClass({
               newPostShift[j] = shiftLength*2;
             }
           }
-          if(key >= count){
-            for (var j = 0; j < count; j++){
-              if(j < (key - count)){
+          if(key >= slideCount){
+            for (var j = 0; j < slideCount; j++){
+              if(j < (key - slideCount)){
                 newPostShift[j] = 0;
                 newPostScale[j] = 1.0;
               }
-              if(j == (key - count)){
+              if(j == (key - slideCount)){
                 newPostShift[j] = shiftLengthEdge;
                 newPostScale[j] = scaleUp;
               }
-              if(j > (key - count)){
+              if(j > (key - slideCount)){
                 newPostShift[j] = shiftLength*2;
                 newPostScale[j] = 1.0;
               }
@@ -200,8 +207,8 @@ var RenderSlides = React.createClass({
         }
         if(rightEdge){
           // add shift and scale parameters
-          if((key >= 0) && (key < count)){
-            for (var j = 0; j < count; j++){
+          if((key >= 0) && (key < slideCount)){
+            for (var j = 0; j < slideCount; j++){
               if(j < key){
                 newShift[j] = -shiftLength*2;
                 newScale[j] = 1.0;
@@ -221,16 +228,16 @@ var RenderSlides = React.createClass({
             }
           }
           if(key < 0){
-            for (var j = 0; j < count; j++){
-              if(j < (key + count)){
+            for (var j = 0; j < slideCount; j++){
+              if(j < (key + slideCount)){
                 newPreShift[j] = -shiftLength*2;
                 newPreScale[j] = 1.0;
               }
-              if(j == (key + count)){
+              if(j == (key + slideCount)){
                 newPreShift[j] = -shiftLengthEdge;
                 newPreScale[j] = scaleUp;
               }
-              if(j > (key + count)){
+              if(j > (key + slideCount)){
                 newPreShift[j] = 0;
                 newPreScale[j] = 1.0;
               }
@@ -240,17 +247,17 @@ var RenderSlides = React.createClass({
               newPostShift[j] = 0;
             }
           }
-          if(key >= count){
-            for (var j = 0; j < count; j++){
-              if(j < (key - count)){
+          if(key >= slideCount){
+            for (var j = 0; j < slideCount; j++){
+              if(j < (key - slideCount)){
                 newPostShift[j] = -shiftLength*2;
                 newPostScale[j] = 1.0;
               }
-              if(j == (key - count)){
+              if(j == (key - slideCount)){
                 newPostShift[j] = -shiftLengthEdge;
                 newPostScale[j] = scaleUp;
               }
-              if(j > (key - count)){
+              if(j > (key - slideCount)){
                 newPostShift[j] = 0;
                 newPostScale[j] = 1.0;
               }
@@ -263,8 +270,8 @@ var RenderSlides = React.createClass({
         }
       } else{
         // add shift and scale parameters
-        if((key >= 0) && (key < count)){
-          for (var j = 0; j < count; j++){
+        if((key >= 0) && (key < slideCount)){
+          for (var j = 0; j < slideCount; j++){
             if(j < key){
               newShift[j] = -shiftLength;
               newScale[j] = 1.0;
@@ -284,16 +291,16 @@ var RenderSlides = React.createClass({
           }
         }
         if(key < 0){
-          for (var j = 0; j < count; j++){
-            if(j < (key + count)){
+          for (var j = 0; j < slideCount; j++){
+            if(j < (key + slideCount)){
               newPreShift[j] = -shiftLength;
               newPreScale[j] = 1.0;
             }
-            if(j == (key + count)){
+            if(j == (key + slideCount)){
               newPreShift[j] = 0;
               newPreScale[j] = scaleUp;
             }
-            if(j > (key + count)){
+            if(j > (key + slideCount)){
               newPreShift[j] = shiftLength;
               newPreScale[j] = 1.0;
             }
@@ -303,17 +310,17 @@ var RenderSlides = React.createClass({
             newPostShift[j] = shiftLength;
           }
         }
-        if(key >= count){
-          for (var j = 0; j < count; j++){
-            if(j < (key - count)){
+        if(key >= slideCount){
+          for (var j = 0; j < slideCount; j++){
+            if(j < (key - slideCount)){
               newPostShift[j] = -shiftLength;
               newPostScale[j] = 1.0;
             }
-            if(j == (key - count)){
+            if(j == (key - slideCount)){
               newPostShift[j] = 0;
               newPostScale[j] = scaleUp;
             }
-            if(j > (key - count)){
+            if(j > (key - slideCount)){
               newPostShift[j] = shiftLength;
               newPostScale[j] = 1.0;
             }
@@ -341,8 +348,9 @@ var RenderSlides = React.createClass({
   // mouse out event
   onMouseOut(key,e) {
     // number of slides
-    var count = React.Children.count(this.props.spec.children);
-
+    //var count = this.props.spec.slidesToShow;
+    var slideCount = React.Children.count(this.props.spec.children);
+    
     // if hover zoom is enabled
     if(this.props.spec.hoverZoom){
       // new arrays
@@ -354,7 +362,7 @@ var RenderSlides = React.createClass({
       var newPostScale = [];
 
       // initialize all values        
-      for (var j = 0; j < count; j++){
+      for (var j = 0; j < slideCount; j++){
         newPreShift[j] = 0;
         newPostShift[j] = 0;
         newShift[j] = 0;
