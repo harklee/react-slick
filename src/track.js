@@ -127,11 +127,11 @@ var RenderSlides = React.createClass({
       var newPostScale = [];
 
       // number of slides
-      var count = this.props.spec.children.length;
+      var count = this.props.spec.slidesToShow;
 
       // if the slide in focus on the edge of the list
       var leftEdge = (key==this.props.spec.currentSlide);
-      var rightEdge =  (key==(this.props.spec.currentSlide+count-1));
+      var rightEdge = (key==(this.props.spec.currentSlide+count-1));
 
       // edge
       if(leftEdge||rightEdge){
@@ -341,7 +341,7 @@ var RenderSlides = React.createClass({
   // mouse out event
   onMouseOut(key,e) {
     // number of slides
-    var count = this.props.spec.children.length;
+    var count = React.Children.count(this.props.spec.children);
 
     // if hover zoom is enabled
     if(this.props.spec.hoverZoom){
